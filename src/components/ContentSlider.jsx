@@ -63,12 +63,20 @@ function SliderCard({ item, type, onClick }) {
 
   const content = getContent();
 
+  const handleClick = () => {
+    if (type === 'pdf' && item.link) {
+      window.open(item.link, '_blank');
+    } else if (onClick) {
+      onClick(item);
+    }
+  };
+
   return (
     <div
       className="flex-shrink-0 w-[200px] md:w-[240px] group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onClick && onClick(item)}
+      onClick={handleClick}
     >
       <div className={`relative aspect-[3/4] rounded-xl overflow-hidden transition-all duration-300 transform ${isHovered ? 'scale-105 z-20' : 'scale-100'}`}>
         {/* Glow effect on hover */}
