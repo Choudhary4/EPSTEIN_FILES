@@ -26,7 +26,25 @@ const Footer = () => {
           </div>
 
           {/* Links Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+              <h4 className="text-white text-sm font-bold mb-4 uppercase tracking-wider">Browse</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/" className="text-gray-500 text-sm hover:text-red-500 transition-colors">
+                    All Videos
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pdfs" className="text-gray-500 text-sm hover:text-amber-500 transition-colors flex items-center gap-2">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
+                    </svg>
+                    PDF Documents
+                  </Link>
+                </li>
+              </ul>
+            </div>
             <div>
               <h4 className="text-white text-sm font-bold mb-4 uppercase tracking-wider">Datasets</h4>
               <ul className="space-y-2">

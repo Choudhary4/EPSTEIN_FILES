@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { videos, datasets } from '../data/videos';
 
 const Hero = ({ onPlay }) => {
@@ -52,9 +53,9 @@ const Hero = ({ onPlay }) => {
 
           {/* Subtitle */}
           <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl leading-relaxed">
-            Complete video catalogue from the Department of Justice release. 
-            Browse through <span className="text-white font-bold">{videos.length.toLocaleString()}</span> official 
-            video files across <span className="text-white font-bold">{datasets.length}</span> datasets.
+            Complete archive from the Department of Justice release. 
+            Browse through <span className="text-white font-bold">{videos.length.toLocaleString()}</span> video files 
+            and <span className="text-white font-bold">11 folders</span> of PDF documents.
           </p>
 
           {/* Stats Row */}
@@ -83,17 +84,17 @@ const Hero = ({ onPlay }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl px-6 py-4">
-              <div className="w-12 h-12 bg-green-600/20 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            <Link to="/pdfs" className="flex items-center gap-4 bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl px-6 py-4 hover:border-amber-600/50 transition-colors">
+              <div className="w-12 h-12 bg-amber-600/20 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4zm-3 9v6h2v-6h3l-4-4-4 4h3z"/>
                 </svg>
               </div>
               <div>
-                <p className="text-lg font-bold text-white">Verified</p>
-                <p className="text-gray-500 text-sm uppercase tracking-wider">Official</p>
+                <p className="text-3xl font-black text-white">11</p>
+                <p className="text-gray-500 text-sm uppercase tracking-wider">PDF Folders</p>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Action Buttons */}
@@ -108,17 +109,15 @@ const Hero = ({ onPlay }) => {
               Play First Video
             </button>
             
-            <a
-              href="https://www.justice.gov/usao-sdny/pr/justice-department-releases-epstein-documents"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-gray-800/80 text-white border border-gray-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-700 transition-all duration-200"
+            <Link
+              to="/pdfs"
+              className="flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-amber-500 transition-all duration-200"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4zm-3 9v6h2v-6h3l-4-4-4 4h3z"/>
               </svg>
-              DOJ Source
-            </a>
+              View PDFs
+            </Link>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const Navbar = ({ searchQuery, setSearchQuery, selectedDataset, setSelectedDatas
     }`}>
       <div className="px-6 md:px-16 lg:px-24 py-5 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center group-hover:bg-red-500 transition-colors">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -31,6 +31,20 @@ const Navbar = ({ searchQuery, setSearchQuery, selectedDataset, setSelectedDatas
               EPSTEIN<span className="text-red-500">FILES</span>
             </span>
           </Link>
+          
+          {/* Nav Links */}
+          <div className="hidden md:flex items-center gap-1">
+            <div className="h-5 w-px bg-gray-700 mx-2" />
+            <Link to="/" className="text-gray-400 hover:text-white text-sm px-3 py-2 rounded-lg hover:bg-white/5 transition-colors">
+              Videos
+            </Link>
+            <Link to="/pdfs" className="text-gray-400 hover:text-white text-sm px-3 py-2 rounded-lg hover:bg-white/5 transition-colors flex items-center gap-2">
+              <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4z"/>
+              </svg>
+              PDFs
+            </Link>
+          </div>
           
           {/* Dataset Filter - Desktop */}
           {datasets && (
