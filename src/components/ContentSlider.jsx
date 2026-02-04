@@ -1,6 +1,21 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// Generate a consistent color based on video name
+function getVideoGradient(name) {
+  const gradients = [
+    'from-red-900 via-red-800 to-gray-900',
+    'from-blue-900 via-indigo-800 to-gray-900',
+    'from-purple-900 via-violet-800 to-gray-900',
+    'from-emerald-900 via-teal-800 to-gray-900',
+    'from-amber-900 via-orange-800 to-gray-900',
+    'from-pink-900 via-rose-800 to-gray-900',
+    'from-cyan-900 via-sky-800 to-gray-900',
+  ];
+  const hash = name.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+  return gradients[hash % gradients.length];
+}
+
 // Generic slider card for different content types
 function SliderCard({ item, type, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -16,7 +31,8 @@ function SliderCard({ item, type, onClick }) {
           badge: item.format?.replace('\r', ''),
           badgeColor: 'bg-red-600',
           accentColor: 'red',
-          thumbnail: `https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg`, // Placeholder
+          isVideo: true,
+          gradient: getVideoGradient(item.name),
         };
       case 'image':
         return {
@@ -60,8 +76,36 @@ function SliderCard({ item, type, onClick }) {
         
         {/* Card content */}
         <div className="relative h-full rounded-xl overflow-hidden ring-1 ring-white/10 group-hover:ring-white/30 transition-all bg-gray-900">
-          {/* Thumbnail or Icon */}
-          {type === 'pdf' ? (
+          {/* Video card with surveillance style */}
+          {type === 'video' ? (
+            <div className={`absolute inset-0 bg-gradient-to-br ${content.gradient}`}>
+              {/* Scanlines */}
+              <div className="absolute inset-0 opacity-20" style={{
+                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)'
+              }} />
+              {/* Noise */}
+              <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+              }} />
+              {/* REC indicator */}
+              <div className="absolute top-3 left-3 flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-red-400 text-[10px] font-mono font-bold">REC</span>
+              </div>
+              {/* Center play icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="p-4 bg-black/40 backdrop-blur-sm rounded-full group-hover:bg-red-600/80 transition-all">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+              {/* Timestamp */}
+              <div className="absolute bottom-12 left-3 px-2 py-1 bg-black/60 rounded font-mono text-white text-[10px]">
+                00:{String(Math.floor(Math.random() * 60)).padStart(2, '0')}:{String(Math.floor(Math.random() * 60)).padStart(2, '0')}
+              </div>
+            </div>
+          ) : type === 'pdf' ? (
             <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-gray-900 to-gray-900 flex items-center justify-center">
               {content.icon}
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDIwdjIwSDB6TTIwIDIwaDIwdjIwSDIweiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
@@ -91,28 +135,26 @@ function SliderCard({ item, type, onClick }) {
             </>
           )}
 
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          {/* Gradient overlay - only for non-video */}
+          {type !== 'video' && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          )}
           
           {/* Badge */}
           <div className={`absolute top-2 left-2 ${content.badgeColor} px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider`}>
             {content.badge}
           </div>
 
-          {/* Play/View icon on hover */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <div className={`p-3 ${content.badgeColor} rounded-full shadow-lg transform scale-75 group-hover:scale-100 transition-transform`}>
-              {type === 'video' ? (
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              ) : (
+          {/* Play/View icon on hover - only for non-video (video has its own) */}
+          {type !== 'video' && (
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div className={`p-3 ${content.badgeColor} rounded-full shadow-lg transform scale-75 group-hover:scale-100 transition-transform`}>
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                 </svg>
-              )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Bottom info */}
           <div className="absolute bottom-0 left-0 right-0 p-3">

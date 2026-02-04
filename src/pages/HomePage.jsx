@@ -9,19 +9,19 @@ import Footer from '../components/Footer'
 import { videos, datasets } from '../data/videos'
 import { getImagesRange, getImageById, getAllValidImageNumbers } from '../data/images'
 
-// PDF folders data
+// PDF folders data with real links
 const pdfFolders = [
-  { id: 1, name: 'Legal Documents', files: 847, description: 'Court filings and legal proceedings' },
-  { id: 2, name: 'Financial Records', files: 523, description: 'Bank statements and transactions' },
-  { id: 3, name: 'Communications', files: 1205, description: 'Emails and correspondence' },
-  { id: 4, name: 'Travel Records', files: 312, description: 'Flight logs and itineraries' },
-  { id: 5, name: 'Property Documents', files: 189, description: 'Real estate and assets' },
-  { id: 6, name: 'Investigation Reports', files: 445, description: 'FBI and police reports' },
-  { id: 7, name: 'Witness Statements', files: 678, description: 'Depositions and testimonies' },
-  { id: 8, name: 'Media Coverage', files: 234, description: 'News articles and press' },
-  { id: 9, name: 'Medical Records', files: 156, description: 'Health and medical documents' },
-  { id: 10, name: 'Personal Photos', files: 892, description: 'Personal photographs' },
-  { id: 11, name: 'Miscellaneous', files: 420, description: 'Other documents' },
+  { id: 1, name: 'Folder 0001', files: 'Batch 1', link: 'https://drive.google.com/drive/folders/1WEbAIwUCDR1Lv5bMQmasmnBYYYZC0imT' },
+  { id: 2, name: 'Folder 0002', files: 'Batch 2', link: 'https://drive.google.com/drive/folders/1hAsbwxLT8CyMoWSwEdfq3n4k8Q1ltzgq' },
+  { id: 3, name: 'Folder 0003', files: 'Batch 3', link: 'https://drive.google.com/drive/folders/1Tf6CnXM70_F6ABIkrEg_JykXsCURSyGd' },
+  { id: 4, name: 'Folder 0004', files: 'Batch 4', link: 'https://drive.google.com/drive/folders/1lk5j9Hhhri--90uadIzlZF5h2269WXtP' },
+  { id: 5, name: 'Folder 0005', files: 'Batch 5', link: 'https://drive.google.com/drive/folders/1zOgDN2hrD_XIoL--Qez1lMibXyymlrIn' },
+  { id: 6, name: 'Folder 0006', files: 'Batch 6', link: 'https://drive.google.com/drive/folders/1Qfa8-Q2Yhk_wnW7oUnSrJhWHBCNZVGCE' },
+  { id: 7, name: 'Folder 0007', files: 'Batch 7', link: 'https://drive.google.com/drive/folders/1NQ7cf-wQcv-KW09f0mSVIgm-1kEK4SqJ' },
+  { id: 8, name: 'Folder 0008', files: 'Batch 8', link: 'https://drive.google.com/drive/folders/1YqowKHcvoYWoNmHFSdjXiqEAh-vBCV-r' },
+  { id: 9, name: 'Folder 0009', files: 'Batch 9', link: 'https://drive.google.com/drive/folders/19tlDDBKXSjXpfTJxWhyCcF1wper71Nhx' },
+  { id: 10, name: 'Folder 0010', files: 'Batch 10', link: 'https://drive.google.com/drive/folders/1pNz1VLW0BuU15Ifvh-NRjXB9DgR0JGJA' },
+  { id: 11, name: 'Folder 0011', files: 'Batch 11', link: 'https://drive.google.com/drive/folders/1sBsLI_pO1RP2qJH9aLY73dwOWTg0UMo4' },
 ];
 
 // Savage lines for different sections
