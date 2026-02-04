@@ -1,8 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { videos, datasets } from '../data/videos';
+
+// Savage quotes that rotate
+const savageQuotes = [
+  "The truth doesn't care about your feelings.",
+  "Some secrets were never meant to stay buried.",
+  "When the rich play, the poor pay.",
+  "Justice delayed is justice denied.",
+  "The island knew. Now you will too.",
+  "Money can't buy everything. But it tried.",
+  "Follow the money. Follow the bodies.",
+  "Epstein didn't... well, you know the rest.",
+  "The flight logs don't lie.",
+  "Who's on the list? Let's find out.",
+];
 
 const Hero = ({ onPlay }) => {
   const featuredVideo = videos[0];
+  const [currentQuote, setCurrentQuote] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuote((prev) => (prev + 1) % savageQuotes.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
@@ -36,7 +59,7 @@ const Hero = ({ onPlay }) => {
         <div className="max-w-4xl pt-20">
           {/* Badge */}
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-md uppercase tracking-wider">
+            <span className="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-md uppercase tracking-wider animate-pulse">
               DOJ Official Release
             </span>
             <span className="text-gray-400 text-sm border border-gray-700/50 bg-gray-900/50 px-4 py-2 rounded-md backdrop-blur-sm">
@@ -45,16 +68,27 @@ const Hero = ({ onPlay }) => {
           </div>
 
           {/* Title */}
-          <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-[0.9] tracking-tight">
+          <h1 className="text-6xl md:text-8xl font-black text-white mb-4 leading-[0.9] tracking-tight">
             EPSTEIN
             <br />
             <span className="text-red-600">FILES</span>
           </h1>
 
+          {/* Savage rotating quote */}
+          <div className="mb-8 h-8 overflow-hidden">
+            <p 
+              key={currentQuote}
+              className="text-red-500/80 text-lg md:text-xl font-medium italic animate-fade-in"
+            >
+              "{savageQuotes[currentQuote]}"
+            </p>
+          </div>
+
           {/* Subtitle */}
           <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl leading-relaxed">
             Complete archive from the Department of Justice release. 
-            Browse through <span className="text-white font-bold">{videos.length.toLocaleString()}</span> video files 
+            Browse through <span className="text-white font-bold">{videos.length.toLocaleString()}</span> video files, 
+            <span className="text-white font-bold">4,101</span> document images, 
             and <span className="text-white font-bold">11 folders</span> of PDF documents.
           </p>
 
@@ -84,6 +118,18 @@ const Hero = ({ onPlay }) => {
               </div>
             </div>
 
+            <Link to="/images" className="flex items-center gap-4 bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl px-6 py-4 hover:border-emerald-600/50 transition-colors">
+              <div className="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-3xl font-black text-white">4,101</p>
+                <p className="text-gray-500 text-sm uppercase tracking-wider">Images</p>
+              </div>
+            </Link>
+
             <Link to="/pdfs" className="flex items-center gap-4 bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl px-6 py-4 hover:border-amber-600/50 transition-colors">
               <div className="w-12 h-12 bg-amber-600/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
@@ -108,6 +154,16 @@ const Hero = ({ onPlay }) => {
               </svg>
               Play First Video
             </button>
+            
+            <Link
+              to="/images"
+              className="flex items-center gap-3 bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-emerald-500 transition-all duration-200"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+              Browse Images
+            </Link>
             
             <Link
               to="/pdfs"

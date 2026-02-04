@@ -4,13 +4,49 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import VideoRow from '../components/VideoRow'
 import VideoModal from '../components/VideoModal'
+import ContentSlider from '../components/ContentSlider'
 import Footer from '../components/Footer'
 import { videos, datasets } from '../data/videos'
+import { getImagesRange, getImageById, getAllValidImageNumbers } from '../data/images'
+
+// PDF folders data
+const pdfFolders = [
+  { id: 1, name: 'Legal Documents', files: 847, description: 'Court filings and legal proceedings' },
+  { id: 2, name: 'Financial Records', files: 523, description: 'Bank statements and transactions' },
+  { id: 3, name: 'Communications', files: 1205, description: 'Emails and correspondence' },
+  { id: 4, name: 'Travel Records', files: 312, description: 'Flight logs and itineraries' },
+  { id: 5, name: 'Property Documents', files: 189, description: 'Real estate and assets' },
+  { id: 6, name: 'Investigation Reports', files: 445, description: 'FBI and police reports' },
+  { id: 7, name: 'Witness Statements', files: 678, description: 'Depositions and testimonies' },
+  { id: 8, name: 'Media Coverage', files: 234, description: 'News articles and press' },
+  { id: 9, name: 'Medical Records', files: 156, description: 'Health and medical documents' },
+  { id: 10, name: 'Personal Photos', files: 892, description: 'Personal photographs' },
+  { id: 11, name: 'Miscellaneous', files: 420, description: 'Other documents' },
+];
+
+// Savage lines for different sections
+const savageLines = {
+  videos: "1,994 reasons why the powerful should be nervous.",
+  images: "A picture is worth a thousand lies.",
+  pdfs: "The paper trail they hoped would burn.",
+};
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDataset, setSelectedDataset] = useState('all')
   const [selectedVideo, setSelectedVideo] = useState(null)
+
+  // Get sample images for slider
+  const sampleImages = useMemo(() => {
+    const validNumbers = getAllValidImageNumbers();
+    const step = Math.floor(validNumbers.length / 20);
+    const samples = [];
+    for (let i = 0; i < 20; i++) {
+      const num = validNumbers[i * step] || validNumbers[i];
+      samples.push(getImageById('EFTA' + String(num).padStart(8, '0')));
+    }
+    return samples;
+  }, []);
 
   // Filter videos based on search and dataset
   const filteredVideos = useMemo(() => {
@@ -65,6 +101,57 @@ function HomePage() {
       />
       
       <Hero onPlay={handlePlay} videos={videos} />
+
+      {/* Featured Content Sliders */}
+      <div className="pt-8 pb-4 bg-[#0a0a0a]">
+        {/* Video Slider */}
+        <ContentSlider
+          title="📹 Surveillance Videos"
+          items={videos.slice(0, 20)}
+          type="video"
+          link="/videos"
+          linkText="1,994 Videos"
+          onItemClick={handlePlay}
+          accentColor="red"
+          savageLine={savageLines.videos}
+        />
+
+        {/* Images Slider */}
+        <ContentSlider
+          title="🖼️ Document Images"
+          items={sampleImages}
+          type="image"
+          link="/images"
+          linkText="4,101 Images"
+          accentColor="emerald"
+          savageLine={savageLines.images}
+        />
+
+        {/* PDFs Slider */}
+        <ContentSlider
+          title="📄 PDF Documents"
+          items={pdfFolders}
+          type="pdf"
+          link="/pdfs"
+          linkText="11 Folders"
+          accentColor="amber"
+          savageLine={savageLines.pdfs}
+        />
+      </div>
+
+      {/* Divider with savage quote */}
+      <div className="bg-[#0a0a0a] py-12">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="border-t border-b border-gray-800 py-8">
+            <p className="text-2xl md:text-3xl font-bold text-white mb-2">
+              "The files don't care about your status."
+            </p>
+            <p className="text-gray-500 text-sm uppercase tracking-widest">
+              Every document tells a story. Every video hides a truth.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Video Rows */}
       <div className="pt-12 pb-8 bg-[#0a0a0a]">
